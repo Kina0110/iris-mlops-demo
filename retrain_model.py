@@ -43,11 +43,13 @@ mlflow.set_experiment("iris-mlops-demo")
 
 with mlflow.start_run():
     mlflow.sklearn.log_model(model, "model")  # log model object
-    mlflow.log_params({
-        "model_type": "RandomForestClassifier",
-        "n_estimators": 100,
-        "random_state": 42
-    })
+    mlflow.log_params(
+        {
+            "model_type": "RandomForestClassifier",
+            "n_estimators": 100,
+            "random_state": 42,
+        }
+    )
     accuracy = model.score(X_test, y_test)
     mlflow.log_metric("accuracy", accuracy)
     mlflow.set_tag("version", timestamp)
