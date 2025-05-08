@@ -9,7 +9,7 @@
 
 ## Next Priorities
 
-### Model Versioning + Retraining Logic
+### Model Versioning + Retraining Logic 
 - [ ] Save model with version/timestamp (`iris_model_v2.pkl`, etc.)
 - [ ] Update `model.py` to load latest version automatically
 - [ ] Add version info to `/predict` response
