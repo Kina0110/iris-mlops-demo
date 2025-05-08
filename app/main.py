@@ -1,0 +1,26 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from app.model import predict_species
+from prometheus_fastapi_instrumentator import Instrumentator
+
+app = FastAPI()
+instrumentator = Instrumentator().instrument(app).expose(app)
+
+class IrisFeatures(BaseModel):
+    sepal_length: float
+    sepal_width: float
+    petal_length: float
+    petal_width: float
+
+@app.get("/")
+def root():
+    return {"message": "Iris Classifier MLOps Demo"}
+
+@app.post("/predict")
+def predict(iris: IrisFeatures):
+    try:
+        features = [iris.sepal_length, iris.sepal_width, iris.petal_length, iris.petal_width]
+        species = predict_species(features)
+        return {"prediction": species}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
