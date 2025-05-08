@@ -115,6 +115,37 @@ GET /metrics
 
 ---
 
+## Monitoring with Prometheus
+
+This project exposes built-in metrics at:
+
+```
+GET /metrics
+```
+
+To enable full monitoring:
+1. Make sure the FastAPI app is running on port 8000:
+   ```bash
+   uvicorn app.main:app --reload --host 0.0.0.0
+   ```
+
+2. Start Prometheus using Docker:
+   ```bash
+   docker compose up
+   ```
+
+Prometheus will be available at:  
+```
+http://localhost:9090
+```
+
+From the dashboard, go to **Status > Targets** to verify scraping is active. You can also query:
+- `http_requests_total`
+- `http_request_duration_seconds_sum`
+- `http_requests_total{status="500"}` for errors
+
+---
+
 ## License
 
 MIT — feel free to use or adapt.
