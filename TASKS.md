@@ -1,3 +1,4 @@
+
 # MLOps Demo Project: Feature Checklist
 
 ## Core Completed
@@ -10,10 +11,10 @@
 ## Next Priorities
 
 ### Model Versioning + Retraining Logic 
-- [ ] Save model with version/timestamp (`iris_model_v2.pkl`, etc.)
-- [ ] Update `model.py` to load latest version automatically
-- [ ] Add version info to `/predict` response
-- [ ] Add retraining trigger simulation (e.g., cron/manual)
+- [x] Save model with version/timestamp (`iris_model_v2.pkl`, etc.)
+- [x] Update `model.py` to load latest version automatically
+- [x] Add version info to `/predict` response
+- [x] Add retraining trigger simulation (e.g., cron/manual)
 
 ### CI/CD Setup (GitHub Actions)
 - [ ] Add `black` formatter check in `.github/workflows/ci.yml`
@@ -23,8 +24,8 @@
 ---
 
 ## Monitoring Expansion
-- [ ] Create `prometheus.yml` scrape config
-- [ ] Run Prometheus via Docker
+- [x] Create `prometheus.yml` scrape config
+- [x] Run Prometheus via Docker
 - [ ] Add Grafana container and dashboard (optional)
 - [ ] Log input/output + latency in app logs
 
