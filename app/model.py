@@ -7,4 +7,12 @@ model = joblib.load(model_path)
 def predict_species(features: list) -> tuple:
     prediction = model.predict([features])[0]
     species = ["setosa", "versicolor", "virginica"]
-    return species[prediction], os.path.basename(model_path)
+
+    version_file = "model_registry/version.txt"
+    if os.path.exists(version_file):
+        with open(version_file, "r") as f:
+            version = f.read().strip()
+    else:
+        version = "unknown"
+
+    return species[prediction], version

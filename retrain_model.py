@@ -28,3 +28,7 @@ joblib.dump(model, versioned_path)
 # overwrite latest_model.pkl so api always gets newest
 latest_path = "model_registry/latest_model.pkl"
 shutil.copy(versioned_path, latest_path)
+
+# write the version info for API visibility
+with open("model_registry/version.txt", "w") as f:
+    f.write(f"iris_model_{timestamp}.pkl")
