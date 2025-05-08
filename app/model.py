@@ -1,10 +1,10 @@
 import joblib
-import numpy as np
+import os
 
-# Load the trained model
-model = joblib.load("app/iris_model.pkl")
+model_path = "model_registry/latest_model.pkl"
+model = joblib.load(model_path)
 
-def predict_species(features: list) -> str:
+def predict_species(features: list) -> tuple:
     prediction = model.predict([features])[0]
     species = ["setosa", "versicolor", "virginica"]
-    return species[prediction]
+    return species[prediction], os.path.basename(model_path)

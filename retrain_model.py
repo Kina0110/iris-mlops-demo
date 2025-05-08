@@ -1,27 +1,30 @@
-# retrain_model.py
-
+from datetime import datetime
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import joblib
+import os
+import shutil
 
 # Load the Iris dataset
 iris = load_iris()
 X, y = iris.data, iris.target
 
-# Split into training and test sets
+# standard train/test split (80/20)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Train a RandomForest model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
-# Save the trained model
-joblib.dump(model, "app/iris_model.pkl")
+# make dir to store models if not already there
+os.makedirs("model_registry", exist_ok=True)
 
-print("Model retrained and saved to app/iris_model.pkl")
+# use timestamp in filename so we know when it was trained
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+versioned_path = f"model_registry/iris_model_{timestamp}.pkl"
+joblib.dump(model, versioned_path)
 
-
-# The model was trained using scikit-learn 1.1.3.
-# Your environment is running scikit-learn 1.5.1.
-# to match envireents run this script ( if issue occurs)
+# overwrite latest_model.pkl so api always gets newest
+latest_path = "model_registry/latest_model.pkl"
+shutil.copy(versioned_path, latest_path)

@@ -14,13 +14,16 @@ class IrisFeatures(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message": "Iris Classifier MLOps Demo"}
+    return {"message": "Iris Classifier API is running."}
 
 @app.post("/predict")
 def predict(iris: IrisFeatures):
     try:
         features = [iris.sepal_length, iris.sepal_width, iris.petal_length, iris.petal_width]
-        species = predict_species(features)
-        return {"prediction": species}
+        species, model_version = predict_species(features)
+        return {
+            "prediction": species,
+            "model_version": model_version
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
