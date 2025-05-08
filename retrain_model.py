@@ -11,7 +11,9 @@ iris = load_iris()
 X, y = iris.data, iris.target
 
 # standard train/test split (80/20)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
 # Train a RandomForest model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
