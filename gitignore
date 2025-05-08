@@ -1,0 +1,28 @@
+
+# MLflow tracking directory
+mlruns/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.so
+
+# MacOS system files
+.DS_Store
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment or package folders
+env/
+venv/
+.venv/
+
+# VSCode workspace settings (optional)
+.vscode/
+
+# Log files
+*.log
+
+# Docker artifacts (optional if using volumes)
+*.pid

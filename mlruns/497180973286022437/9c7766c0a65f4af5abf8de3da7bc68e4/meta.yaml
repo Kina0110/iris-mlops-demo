@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/a0a0ef3/Downloads/iris-mlops/mlruns/497180973286022437/9c7766c0a65f4af5abf8de3da7bc68e4/artifacts
+end_time: 1746680666896
+entry_point_name: ''
+experiment_id: '497180973286022437'
+lifecycle_stage: active
+run_id: 9c7766c0a65f4af5abf8de3da7bc68e4
+run_name: grandiose-koi-625
+run_uuid: 9c7766c0a65f4af5abf8de3da7bc68e4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746680661225
+status: 3
+tags: []
+user_id: a0a0ef3
