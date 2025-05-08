@@ -17,9 +17,9 @@
 - [x] Add retraining trigger simulation (e.g., cron/manual)
 
 ### CI/CD Setup (GitHub Actions)
-- [ ] Add `black` formatter check in `.github/workflows/ci.yml`
-- [ ] Add basic test (`test_predict.py`) for input/output validation
-- [ ] Enable automatic lint/test on push
+- [x] Add `black` formatter check in `.github/workflows/ci.yml`
+- [x] Add basic test (`test_predict.py`) for input/output validation
+- [x] Enable automatic lint/test on push
 
 ---
 

@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 import joblib
 import os
 import shutil
+import mlflow
+import mlflow.sklearn
 
 # Load the Iris dataset
 iris = load_iris()
@@ -34,3 +36,18 @@ shutil.copy(versioned_path, latest_path)
 # write the version info for API visibility
 with open("model_registry/version.txt", "w") as f:
     f.write(f"iris_model_{timestamp}.pkl")
+
+# Set local tracking directory
+mlflow.set_tracking_uri("file:./mlruns")
+mlflow.set_experiment("iris-mlops-demo")
+
+with mlflow.start_run():
+    mlflow.sklearn.log_model(model, "model")  # log model object
+    mlflow.log_params({
+        "model_type": "RandomForestClassifier",
+        "n_estimators": 100,
+        "random_state": 42
+    })
+    accuracy = model.score(X_test, y_test)
+    mlflow.log_metric("accuracy", accuracy)
+    mlflow.set_tag("version", timestamp)

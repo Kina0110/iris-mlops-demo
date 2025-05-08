@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/a0a0ef3/Downloads/iris-mlops/mlruns/497180973286022437/1e44db2f843240e9b5042e086bc18425/artifacts
+end_time: 1746680722773
+entry_point_name: ''
+experiment_id: '497180973286022437'
+lifecycle_stage: active
+run_id: 1e44db2f843240e9b5042e086bc18425
+run_name: bald-hen-894
+run_uuid: 1e44db2f843240e9b5042e086bc18425
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746680719885
+status: 3
+tags: []
+user_id: a0a0ef3
