@@ -9,11 +9,17 @@ model = joblib.load(model_path)
 # Load mock feature store
 feature_store = pd.read_csv("feature_store/feature_store.csv")
 
+
 def get_features_by_id(feature_id: int):
-    row = feature_store[feature_store['feature_id'] == feature_id]
+    row = feature_store[feature_store["feature_id"] == feature_id]
     if row.empty:
         raise ValueError(f"Feature ID {feature_id} not found in feature store.")
-    return row[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']].values.flatten().tolist()
+    return (
+        row[["sepal_length", "sepal_width", "petal_length", "petal_width"]]
+        .values.flatten()
+        .tolist()
+    )
+
 
 def predict_species(features: list) -> tuple:
     prediction = model.predict([features])[0]

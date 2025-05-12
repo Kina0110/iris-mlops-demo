@@ -9,6 +9,7 @@ app = FastAPI()
 # Enable Prometheus metrics on /metrics automatically
 Instrumentator().instrument(app).expose(app)
 
+
 class PredictRequest(BaseModel):
     feature_id: int = Field(None, description="Feature ID from feature store")
     sepal_length: float = Field(None)
@@ -16,16 +17,31 @@ class PredictRequest(BaseModel):
     petal_length: float = Field(None)
     petal_width: float = Field(None)
 
+
 @app.post("/predict")
 def predict(request: PredictRequest):
-    try: 
+    try:
         if request.feature_id is not None:
             features = get_features_by_id(request.feature_id)
-        elif all([request.sepal_length, request.sepal_width, request.petal_length, request.petal_width]):
-            features = [request.sepal_length, request.sepal_width, request.petal_length, request.petal_width]
+        elif all(
+            [
+                request.sepal_length,
+                request.sepal_width,
+                request.petal_length,
+                request.petal_width,
+            ]
+        ):
+            features = [
+                request.sepal_length,
+                request.sepal_width,
+                request.petal_length,
+                request.petal_width,
+            ]
         else:
-            raise HTTPException(status_code=400, detail="Either provide feature_id or all raw features.")
-        
+            raise HTTPException(
+                status_code=400, detail="Either provide feature_id or all raw features."
+            )
+
         prediction, version = predict_species(features)
         return {"prediction": prediction, "model_version": version}
     except Exception as e:
