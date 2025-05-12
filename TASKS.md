@@ -45,6 +45,6 @@
 ---
 
 ## Deployment (Optional)
-- [ ] Deploy FastAPI app to Hugging Face Spaces / Render / GCP
+- [x] Deploy FastAPI app to Hugging Face Spaces / Render / GCP
 - [ ] Secure endpoint with CORS or API key
 - [ ] Document endpoint for external use

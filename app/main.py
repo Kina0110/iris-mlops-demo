@@ -1,8 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from prometheus_fastapi_instrumentator import Instrumentator
+
 from app.model import predict_species, get_features_by_id
 
 app = FastAPI()
+
+# Enable Prometheus metrics on /metrics automatically
+Instrumentator().instrument(app).expose(app)
 
 class PredictRequest(BaseModel):
     feature_id: int = Field(None, description="Feature ID from feature store")
@@ -13,7 +18,7 @@ class PredictRequest(BaseModel):
 
 @app.post("/predict")
 def predict(request: PredictRequest):
-    try:
+    try: 
         if request.feature_id is not None:
             features = get_features_by_id(request.feature_id)
         elif all([request.sepal_length, request.sepal_width, request.petal_length, request.petal_width]):

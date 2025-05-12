@@ -1,3 +1,4 @@
+
 # iris-mlops-demo
 
 An end-to-end MLOps demo that trains, serves, and monitors a machine learning model using FastAPI, Docker, and Prometheus. Built to demonstrate core capabilities like versioned model retraining, live inference, and traceability.
@@ -115,34 +116,47 @@ GET /metrics
 
 ---
 
-## Monitoring with Prometheus
+## Monitoring with Prometheus and Grafana
 
-This project exposes built-in metrics at:
+This project provides observability via:
+- **Prometheus** (metrics collection)
+- **Grafana** (visual dashboards)
 
-```
-GET /metrics
-```
+### Steps to Run
 
-To enable full monitoring:
 1. Make sure the FastAPI app is running on port 8000:
    ```bash
    uvicorn app.main:app --reload --host 0.0.0.0
    ```
 
-2. Start Prometheus using Docker:
+2. Start Prometheus and Grafana using Docker Compose:
    ```bash
    docker compose up
    ```
 
-Prometheus will be available at:  
-```
-http://localhost:9090
-```
+3. Access Prometheus at:
+   ```
+   http://localhost:9090
+   ```
 
-From the dashboard, go to **Status > Targets** to verify scraping is active. You can also query:
-- `http_requests_total`
-- `http_request_duration_seconds_sum`
-- `http_requests_total{status="500"}` for errors
+4. Access Grafana at:
+   ```
+   http://localhost:3000
+   ```
+
+   - Login using default credentials: `admin` / `admin`
+   - Add Prometheus as a data source (`http://host.docker.internal:9090`)
+   - Create a dashboard and add panels:
+     - Total HTTP Requests query:
+       ```
+       http_requests_total
+       ```
+     - HTTP 500 Errors query:
+       ```
+       http_requests_total{status="5xx"}
+       ```
+
+   You can explore, visualize, and monitor the FastAPI app metrics directly from Grafana.
 
 ---
 
@@ -155,16 +169,12 @@ https://iris-mlops-demo.onrender.com/docs
 
 #### Example predict request using `feature_id` (from feature store):
 ```bash
-curl -X POST https://iris-mlops-demo.onrender.com/predict \
--H "Content-Type: application/json" \
--d '{"feature_id": 1}'
+curl -X POST https://iris-mlops-demo.onrender.com/predict -H "Content-Type: application/json" -d '{"feature_id": 1}'
 ```
 
 #### Example predict request using raw inputs:
 ```bash
-curl -X POST https://iris-mlops-demo.onrender.com/predict \
--H "Content-Type: application/json" \
--d '{
+curl -X POST https://iris-mlops-demo.onrender.com/predict -H "Content-Type: application/json" -d '{
   "sepal_length": 5.1,
   "sepal_width": 3.5,
   "petal_length": 1.4,
