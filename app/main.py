@@ -1,48 +1,27 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from app.model import predict_species
-from prometheus_fastapi_instrumentator import Instrumentator
-import subprocess
+from pydantic import BaseModel, Field
+from app.model import predict_species, get_features_by_id
 
 app = FastAPI()
-instrumentator = Instrumentator().instrument(app).expose(app)
 
-
-class IrisFeatures(BaseModel):
-    sepal_length: float
-    sepal_width: float
-    petal_length: float
-    petal_width: float
-
-
-@app.get("/")
-def root():
-    return {"message": "Iris Classifier API is running."}
-
+class PredictRequest(BaseModel):
+    feature_id: int = Field(None, description="Feature ID from feature store")
+    sepal_length: float = Field(None)
+    sepal_width: float = Field(None)
+    petal_length: float = Field(None)
+    petal_width: float = Field(None)
 
 @app.post("/predict")
-def predict(iris: IrisFeatures):
+def predict(request: PredictRequest):
     try:
-        features = [
-            iris.sepal_length,
-            iris.sepal_width,
-            iris.petal_length,
-            iris.petal_width,
-        ]
-        species, model_version = predict_species(features)
-        return {"prediction": species, "model_version": model_version}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/retrain")
-def retrain_model():
-    try:
-        result = subprocess.run(
-            ["python", "retrain_model.py"], capture_output=True, text=True
-        )
-        if result.returncode != 0:
-            raise HTTPException(status_code=500, detail=result.stderr)
-        return {"message": "Model retrained successfully."}
+        if request.feature_id is not None:
+            features = get_features_by_id(request.feature_id)
+        elif all([request.sepal_length, request.sepal_width, request.petal_length, request.petal_width]):
+            features = [request.sepal_length, request.sepal_width, request.petal_length, request.petal_width]
+        else:
+            raise HTTPException(status_code=400, detail="Either provide feature_id or all raw features.")
+        
+        prediction, version = predict_species(features)
+        return {"prediction": prediction, "model_version": version}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
