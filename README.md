@@ -146,6 +146,44 @@ From the dashboard, go to **Status > Targets** to verify scraping is active. You
 
 ---
 
+## Render Deployment (Public)
+
+This project is also deployed and publicly accessible at:
+```
+https://iris-mlops-demo.onrender.com/docs
+```
+
+#### Example predict request using `feature_id` (from feature store):
+```bash
+curl -X POST https://iris-mlops-demo.onrender.com/predict \
+-H "Content-Type: application/json" \
+-d '{"feature_id": 1}'
+```
+
+#### Example predict request using raw inputs:
+```bash
+curl -X POST https://iris-mlops-demo.onrender.com/predict \
+-H "Content-Type: application/json" \
+-d '{
+  "sepal_length": 5.1,
+  "sepal_width": 3.5,
+  "petal_length": 1.4,
+  "petal_width": 0.2
+}'
+```
+
+#### Trigger retraining:
+```bash
+curl -X POST https://iris-mlops-demo.onrender.com/retrain
+```
+
+#### Get Prometheus metrics:
+```
+https://iris-mlops-demo.onrender.com/metrics
+```
+
+---
+
 ## License
 
 MIT — feel free to use or adapt.
