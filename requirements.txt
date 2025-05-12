@@ -6,3 +6,4 @@ prometheus-fastapi-instrumentator
 mlflow
 pytest
 black
+httpx
