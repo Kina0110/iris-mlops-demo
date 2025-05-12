@@ -1,4 +1,3 @@
-
 # MLOps Demo Project: Feature Checklist
 
 ## Core Completed
@@ -8,15 +7,15 @@
 
 ---
 
-## Next Priorities
-
-### Model Versioning + Retraining Logic 
+## Model Versioning + Retraining Logic 
 - [x] Save model with version/timestamp (`iris_model_v2.pkl`, etc.)
 - [x] Update `model.py` to load latest version automatically
 - [x] Add version info to `/predict` response
 - [x] Add retraining trigger simulation (e.g., cron/manual)
 
-### CI/CD Setup (GitHub Actions)
+---
+
+## CI/CD Setup (GitHub Actions)
 - [x] Add `black` formatter check in `.github/workflows/ci.yml`
 - [x] Add basic test (`test_predict.py`) for input/output validation
 - [x] Enable automatic lint/test on push
@@ -32,15 +31,15 @@
 ---
 
 ## Experiment Tracking
-- [ ] Add MLflow to `retrain_model.py`
-- [ ] Log params, metrics, and versioned models
+- [x] Add MLflow to `retrain_model.py`
+- [x] Log params, metrics, and versioned models
 - [ ] (Optional) Add MLflow UI to Docker Compose
 
 ---
 
 ## Feature Store Simulation (Optional)
-- [ ] Use pandas to simulate feature ingestion + caching
-- [ ] Replace raw API input with lookup from preloaded feature table
+- [x] Use pandas to simulate feature ingestion + caching
+- [x] Replace raw API input with lookup from preloaded feature table
 - [ ] (Stretch goal) Try `Feast` integration
 
 ---
